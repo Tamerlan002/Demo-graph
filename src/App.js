@@ -88,7 +88,7 @@ function App() {
         graphInitialized.current = false; // Reset flag when cleaning up
       };
     }
-  }, [location]);
+  }, [location]); // 'dataArr' is not necessary in dependencies since it is static and doesn't change
   
 
   useEffect(() => {
@@ -100,7 +100,7 @@ function App() {
         graphInstance.setNodeAttribute(node, "hidden", !isVisible);
       });
     }
-  }, [searchQuery, graphInstance]);
+  }, [searchQuery, graphInstance]); // This ensures the search works when the search query or graph instance changes
 
   const handleSearch = (e) => {
     setSearchQuery(e.target.value);
