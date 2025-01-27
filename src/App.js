@@ -11,7 +11,7 @@ function App() {
   const [graphInstance, setGraphInstance] = useState(null); // Track the graph instance
 
   // Dummy data array with 25 entries
-  let dataArr = [
+  const dataArr = [
     { title: "Research about water", color: "orange" },
     { title: "Study of animals", color: "green" },
     { title: "Graph theory basics", color: "blue" },
@@ -40,12 +40,14 @@ function App() {
     { title: "Genomics and bioinformatics", color: "darkslategray" },
   ];
 
-  useEffect(() => {
-    // Initialize the graph only if we're on the main page
-    if (location.pathname === "/") {
-      const graph = new Graph();
+  const graphInitialized = useRef(false);
 
-      // Add nodes from data
+  useEffect(() => {
+    if (location.pathname === "/" && !graphInitialized.current) {
+      // Only initialize the graph if it's not already initialized
+      const graph = new Graph();
+  
+      // Add nodes and edges to the graph
       dataArr.forEach((data, index) => {
         const nodeId = `${index + 1}`;
         graph.addNode(nodeId, {
@@ -56,37 +58,38 @@ function App() {
           color: data.color,
         });
       });
-
-      // Add random edges between nodes
+  
+      // Add edges between nodes
       for (let i = 0; i < dataArr.length - 1; i++) {
         graph.addEdge(`${i + 1}`, `${i + 2}`, {
           size: Math.random() * 5 + 1,
           color: "gray",
         });
       }
-
-      // Initialize Sigma.js with the graph and the container reference
+  
+      // Initialize Sigma.js and the graph
       const renderer = new Sigma(graph, sigmaContainerRef.current);
-
-      // Set the graph instance so we can later manipulate it
       setGraphInstance(renderer.graph);
-
-      // Open the node title in a new tab when clicked
+  
+      // Set flag to true once the graph has been initialized
+      graphInitialized.current = true;
+  
+      // Handle node click event
       renderer.on("clickNode", (event) => {
         const nodeId = event.node;
         const nodeTitle = graph.getNodeAttribute(nodeId, "label");
-
-        // Open a new tab with the subject page (passing the title as a query)
         const newTab = window.open("/subject/" + nodeTitle, "_blank");
         newTab.focus();
       });
-
-      // Cleanup when the component is unmounted or before reinitializing
+  
+      // Cleanup on unmount or location change
       return () => {
         renderer.kill();
+        graphInitialized.current = false; // Reset flag when cleaning up
       };
     }
   }, [location]);
+  
 
   useEffect(() => {
     // If the graph instance is set and searchQuery changes
