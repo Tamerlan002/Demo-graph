@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Graph from "graphology";
 import Sigma from "sigma";
 import { Routes, Route, useLocation } from "react-router-dom";
