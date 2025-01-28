@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import Graph from "graphology";
 import Sigma from "sigma";
 import { Routes, Route, useLocation } from "react-router-dom";
@@ -10,8 +10,8 @@ function App() {
   const location = useLocation(); // Track the current location (route)
   const [graphInstance, setGraphInstance] = useState(null); // Track the graph instance
 
-  // Dummy data array with 25 entries
-  const dataArr = [
+
+const dataArr = [
     { title: "Research about water", color: "orange" },
     { title: "Study of animals", color: "green" },
     { title: "Graph theory basics", color: "blue" },
@@ -39,15 +39,15 @@ function App() {
     { title: "Renewable energy sources", color: "darkgreen" },
     { title: "Genomics and bioinformatics", color: "darkslategray" },
   ];
-
+  // Dummy data array with 25 entries
+  const memoizedData = useMemo(() => dataArr,[]) 
+  
   const graphInitialized = useRef(false);
 
   useEffect(() => {
     if (location.pathname === "/" && !graphInitialized.current) {
-      // Only initialize the graph if it's not already initialized
       const graph = new Graph();
   
-      // Add nodes and edges to the graph
       dataArr.forEach((data, index) => {
         const nodeId = `${index + 1}`;
         graph.addNode(nodeId, {
@@ -59,7 +59,6 @@ function App() {
         });
       });
   
-      // Add edges between nodes
       for (let i = 0; i < dataArr.length - 1; i++) {
         graph.addEdge(`${i + 1}`, `${i + 2}`, {
           size: Math.random() * 5 + 1,
@@ -67,14 +66,11 @@ function App() {
         });
       }
   
-      // Initialize Sigma.js and the graph
       const renderer = new Sigma(graph, sigmaContainerRef.current);
       setGraphInstance(renderer.graph);
   
-      // Set flag to true once the graph has been initialized
       graphInitialized.current = true;
   
-      // Handle node click event
       renderer.on("clickNode", (event) => {
         const nodeId = event.node;
         const nodeTitle = graph.getNodeAttribute(nodeId, "label");
@@ -82,13 +78,12 @@ function App() {
         newTab.focus();
       });
   
-      // Cleanup on unmount or location change
       return () => {
         renderer.kill();
-        graphInitialized.current = false; // Reset flag when cleaning up
+        graphInitialized.current = false;
       };
     }
-  }, [location]); // 'dataArr' is not necessary in dependencies since it is static and doesn't change
+  }, [location], memoizedData);
   
 
   useEffect(() => {
