@@ -4,6 +4,35 @@ import Sigma from "sigma";
 import { Routes, Route, useLocation } from "react-router-dom";
 import SubjectPage from "./SubjectPage";
 
+const dataArr = [
+  { title: "Research about water", color: "orange" },
+  { title: "Study of animals", color: "green" },
+  { title: "Graph theory basics", color: "blue" },
+  { title: "React and state management", color: "purple" },
+  { title: "Web development trends", color: "red" },
+  { title: "Machine learning advancements", color: "cyan" },
+  { title: "Artificial intelligence in 2025", color: "yellow" },
+  { title: "Understanding deep learning", color: "violet" },
+  { title: "The future of virtual reality", color: "pink" },
+  { title: "Blockchain and cryptocurrency", color: "black" },
+  { title: "Cloud computing growth", color: "brown" },
+  { title: "Big data analysis techniques", color: "teal" },
+  { title: "Cybersecurity trends in 2025", color: "gray" },
+  { title: "IoT revolution", color: "magenta" },
+  { title: "Data privacy laws", color: "blueviolet" },
+  { title: "5G network rollout", color: "indigo" },
+  { title: "Quantum computing basics", color: "peru" },
+  { title: "Augmented reality applications", color: "slateblue" },
+  { title: "Digital transformation in enterprises", color: "firebrick" },
+  { title: "Next-gen programming languages", color: "crimson" },
+  { title: "Natural language processing", color: "forestgreen" },
+  { title: "Autonomous vehicles", color: "gold" },
+  { title: "Smart cities and infrastructure", color: "seagrseen" },
+  { title: "The rise of 3D printing", color: "salmon" },
+  { title: "Renewable energy sources", color: "darkgreen" },
+  { title: "Genomics and bioinformatics", color: "darkslategray" },
+];
+
 function App() {
   const sigmaContainerRef = useRef(null);
   const [searchQuery, setSearchQuery] = useState("");
@@ -11,36 +40,8 @@ function App() {
   const [graphInstance, setGraphInstance] = useState(null); // Track the graph instance
 
 
-const dataArr = [
-    { title: "Research about water", color: "orange" },
-    { title: "Study of animals", color: "green" },
-    { title: "Graph theory basics", color: "blue" },
-    { title: "React and state management", color: "purple" },
-    { title: "Web development trends", color: "red" },
-    { title: "Machine learning advancements", color: "cyan" },
-    { title: "Artificial intelligence in 2025", color: "yellow" },
-    { title: "Understanding deep learning", color: "violet" },
-    { title: "The future of virtual reality", color: "pink" },
-    { title: "Blockchain and cryptocurrency", color: "black" },
-    { title: "Cloud computing growth", color: "brown" },
-    { title: "Big data analysis techniques", color: "teal" },
-    { title: "Cybersecurity trends in 2025", color: "gray" },
-    { title: "IoT revolution", color: "magenta" },
-    { title: "Data privacy laws", color: "blueviolet" },
-    { title: "5G network rollout", color: "indigo" },
-    { title: "Quantum computing basics", color: "peru" },
-    { title: "Augmented reality applications", color: "slateblue" },
-    { title: "Digital transformation in enterprises", color: "firebrick" },
-    { title: "Next-gen programming languages", color: "crimson" },
-    { title: "Natural language processing", color: "forestgreen" },
-    { title: "Autonomous vehicles", color: "gold" },
-    { title: "Smart cities and infrastructure", color: "seagrseen" },
-    { title: "The rise of 3D printing", color: "salmon" },
-    { title: "Renewable energy sources", color: "darkgreen" },
-    { title: "Genomics and bioinformatics", color: "darkslategray" },
-  ];
+
   // Dummy data array with 25 entries
-  const memoizedData = useMemo(() => dataArr,[]) 
   
   const graphInitialized = useRef(false);
 
@@ -83,7 +84,7 @@ const dataArr = [
         graphInitialized.current = false;
       };
     }
-  }, [location], memoizedData);
+  }, [location], dataArr);
   
 
   useEffect(() => {
