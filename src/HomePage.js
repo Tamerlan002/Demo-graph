@@ -2,7 +2,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import Graph from "graphology";
 import Sigma from "sigma";
-import { Routes, Route, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
 function HomePage() {
   const sigmaContainerRef = useRef(null);

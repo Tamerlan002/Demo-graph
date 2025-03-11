@@ -94,7 +94,7 @@ function LCStage() {
           graphInitialized.current = false;
         };
 
-  }, [topicArr, graphInitialized]); // Re-run the effect only when topicArr or graphCreated changes
+  }, [topicArr, graphInitialized, graphCreated]); // Re-run the effect only when topicArr or graphCreated changes
 
 
   

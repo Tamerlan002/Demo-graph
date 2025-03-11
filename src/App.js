@@ -1,5 +1,5 @@
 // App.js
-import { Routes, Route, useLocation } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import HomePage from "./HomePage";
 import Topic from "./Topic"
 import LCStage from "./LCStage";

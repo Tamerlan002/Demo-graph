@@ -93,7 +93,7 @@ function Topic() {
           graphInitialized.current = false;
         };
 
-  }, [subtopicArr, graphInitialized]); // Re-run the effect only when topicArr or graphCreated changes
+  }, [subtopicArr, graphInitialized, graphCreated]); // Re-run the effect only when topicArr or graphCreated changes
 
 
   
